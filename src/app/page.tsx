@@ -6,12 +6,14 @@ export default function Home() {
         <span style={{ fontFamily: "var(--font-display)" }} className="text-3xl font-black text-lime-700 tracking-tight uppercase">
           Reportly
         </span>
-        <a
-          href="mailto:hello@wikolabs.com?subject=Reportly — Demande de démo"
-          className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition"
-        >
-          Démo gratuite
-        </a>
+        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition">
+            📅 Réserver un créneau →
+          </a>
+          <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition" style={{ background: "#25d366", borderColor: "#25d366" }}>
+            💬 WhatsApp →
+          </a>
+        </div>
       </nav>
 
       {/* Hero */}
@@ -27,12 +29,14 @@ export default function Home() {
         <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
           Reportly génère et livre vos rapports business personnalisés — sans manipulation manuelle, sans oublier une seule semaine.
         </p>
-        <a
-          href="mailto:hello@wikolabs.com?subject=Reportly — Demande de démo"
-          className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg"
-        >
-          Commencer maintenant
-        </a>
+        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg">
+            📅 Réserver un créneau →
+          </a>
+          <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg" style={{ background: "#25d366", borderColor: "#25d366" }}>
+            💬 WhatsApp →
+          </a>
+        </div>
       </section>
 
       {/* Email Preview Mockup */}
@@ -101,12 +105,14 @@ export default function Home() {
           Le prochain rapport s&rsquo;écrit tout seul.
         </h2>
         <p className="text-lime-100 mb-8">Setup en 15 minutes. Aucune carte bancaire requise.</p>
-        <a
-          href="mailto:hello@wikolabs.com?subject=Reportly — Demande de démo"
-          className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition"
-        >
-          Parler à l&rsquo;équipe
-        </a>
+        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition">
+            📅 Réserver un créneau →
+          </a>
+          <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition" style={{ background: "#25d366", borderColor: "#25d366" }}>
+            💬 WhatsApp →
+          </a>
+        </div>
       </section>
 
       <footer className="text-center py-5 text-slate-400 text-sm bg-white border-t border-lime-100">
