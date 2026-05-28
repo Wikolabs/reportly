@@ -1,4 +1,4 @@
-export default function Home() {
+﻿export default function Home() {
   return (
     <main style={{ fontFamily: "var(--font-body)" }}>
       {/* Nav */}
@@ -116,7 +116,14 @@ export default function Home() {
       </section>
 
       <footer className="text-center py-5 text-slate-400 text-sm bg-white border-t border-lime-100">
-        &copy; 2025 Reportly — Un produit Wikolabs
+        <p>&copy; 2025 Reportly &mdash; Un produit Wikolabs</p>
+        <div className="flex flex-wrap justify-center gap-4 mt-2 text-xs text-slate-400">
+          <a href="mailto:team@wikolabs.com" className="hover:text-slate-600 transition-colors">team@wikolabs.com</a>
+          <span>·</span>
+          <a href="tel:+261386626100" className="hover:text-slate-600 transition-colors">+261 38 66 261 00</a>
+          <span>·</span>
+          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">Prendre RDV</a>
+        </div>
       </footer>
     </main>
   );
