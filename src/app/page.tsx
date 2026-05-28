@@ -7,9 +7,9 @@
           Reportly
         </span>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition">
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition">
             📅 Réserver un créneau →
-          </a>
+          </button>
           <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition" style={{ background: "#25d366", borderColor: "#25d366" }}>
             💬 WhatsApp →
           </a>
@@ -30,9 +30,9 @@
           Reportly génère et livre vos rapports business personnalisés — sans manipulation manuelle, sans oublier une seule semaine.
         </p>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg">
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg">
             📅 Réserver un créneau →
-          </a>
+          </button>
           <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg" style={{ background: "#25d366", borderColor: "#25d366" }}>
             💬 WhatsApp →
           </a>
@@ -106,9 +106,9 @@
         </h2>
         <p className="text-lime-100 mb-8">Setup en 15 minutes. Aucune carte bancaire requise.</p>
         <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition">
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition">
             📅 Réserver un créneau →
-          </a>
+          </button>
           <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition" style={{ background: "#25d366", borderColor: "#25d366" }}>
             💬 WhatsApp →
           </a>
