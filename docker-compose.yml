@@ -1,0 +1,36 @@
+version: "3.9"
+
+# Reportly demo — production-ready POC.
+# 2 services orchestrated:
+#   - reportly (Next.js frontend on host port 3013)
+#   - reportly-backend (FastAPI Python, internal only on 8000)
+# Internal network so the frontend can reach the backend by service name.
+
+services:
+  reportly-backend:
+    image: ghcr.io/wikolabs/reportly-backend:latest
+    container_name: reportly-backend
+    restart: unless-stopped
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    networks:
+      - reportly-net
+
+  reportly:
+    image: ghcr.io/wikolabs/reportly:latest
+    container_name: reportly
+    restart: unless-stopped
+    ports:
+      - "3013:3000"
+    environment:
+      BACKEND_URL: "http://reportly-backend:8000"
+    depends_on:
+      - reportly-backend
+    networks:
+      - reportly-net
+
+networks:
+  reportly-net:
+    name: reportly-net
+    driver: bridge
