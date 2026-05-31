@@ -1,130 +1,231 @@
-﻿export default function Home() {
+﻿"use client";
+
+const P = {
+  name: "Reportly",
+  tagLabel: "Reporting automatise · KPIs · Multi-canal",
+  taglines: ["Vos donnees collectees.", "Votre rapport redige tout seul.", "Chaque lundi a 8h."],
+  taglineAccentIdx: 1,
+  desc: "Reportly connecte toutes vos sources de donnees, genere des rapports business personnalises et les livre a votre equipe — par email, Slack ou PDF — selon la cadence que vous choisissez.",
+  accent: "#F59E0B",
+  accentDim: "rgba(245,158,11,0.1)",
+  accentBorder: "rgba(245,158,11,0.25)",
+  accentGlow: "rgba(245,158,11,0.12)",
+  waText: "Reportly",
+  navLinks: [
+    { label: "Fonctionnalites", href: "#features" },
+    { label: "Comment ca marche", href: "#process" },
+    { label: "Contact", href: "#cta" },
+  ],
+  metrics: [
+    { value: "30+", label: "templates inclus" },
+    { value: "12h", label: "economisees / semaine" },
+    { value: "0", label: "rapport oublie" },
+    { value: "100%", label: "automatise" },
+  ],
+  features: [
+    { icon: "📊", title: "Templates intelligents", desc: "Choisissez parmi 30+ templates ou creez le votre. Reportly adapte la mise en page et le niveau de detail selon l'audience : dirigeants, equipes ou investisseurs." },
+    { icon: "📡", title: "Multi-canal natif", desc: "Email, Slack, PDF, Notion, Google Drive — votre rapport arrive la ou votre equipe travaille, automatiquement, selon la cadence hebdomadaire ou mensuelle configuree." },
+    { icon: "🔔", title: "Alertes sur seuils", desc: "Definissez des seuils critiques sur vos KPIs. Reportly envoie une alerte immediate si une metrique sort de la zone verte, sans attendre le prochain rapport." },
+  ],
+  steps: [
+    { num: "01", title: "Connectez vos sources", desc: "CRM, ERP, Google Analytics, Stripe, HubSpot — Reportly centralise toutes vos donnees en quelques clics. Aucun code, aucune ETL a configurer." },
+    { num: "02", title: "Configurez votre rapport", desc: "Choisissez les metriques, la periode, le template et les destinataires. L'IA adapte la narrative et met en avant les tendances significatives." },
+    { num: "03", title: "Le rapport s'envoie automatiquement", desc: "Chaque lundi a 8h (ou selon votre cadence), le rapport est genere, verifie et livre. Votre equipe lit, vous decidez." },
+  ],
+  testimonials: [
+    { quote: "Mon equipe finance passait 6 heures par mois a consolider les donnees pour le rapport mensuel. Avec Reportly, c'est 20 minutes de verification et tout est pret. Une revolution.", author: "Laurent B.", role: "DAF, Groupe industriel 200 employes" },
+    { quote: "Le rapport hebdo arrive dans notre Slack chaque lundi avant le stand-up. Tout le monde est aligne sur les KPIs avant meme d'avoir bu son cafe. Indispensable.", author: "Amelie F.", role: "CEO, E-commerce DTC" },
+  ],
+  ctaTitle: "Votre prochain rapport, genere automatiquement",
+  ctaDesc: "Setup en 15 minutes. Premier rapport envoye des cette semaine. Aucune carte bancaire.",
+  ctaPrimary: "Reserver un creneau",
+  footerTagline: "Reporting business automatise pour dirigeants et equipes",
+};
+
+export default function Page() {
+  const bg = "#04080F";
+  const bg2 = "#070D1B";
+  const card = "rgba(255,255,255,0.04)";
+  const border = "rgba(255,255,255,0.09)";
+  const gold = "#D4AF37";
+  const goldDim = "rgba(212,175,55,0.1)";
+  const goldBorder = "rgba(212,175,55,0.28)";
+  const txt1 = "#F0EDE6";
+  const txt2 = "#8B9DB5";
+  const txt3 = "#3C5068";
+  const { accent, accentDim, accentBorder, accentGlow } = P;
+
   return (
-    <main style={{ fontFamily: "var(--font-body)" }}>
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-8 py-4 bg-white border-b-4 border-lime-500 sticky top-0 z-10">
-        <span style={{ fontFamily: "var(--font-display)" }} className="text-3xl font-black text-lime-700 tracking-tight uppercase">
-          Reportly
+    <div style={{ minHeight: "100vh", background: bg, color: txt1 }}>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes pulseDot { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(1.6); } }
+        .wk-card { transition: background .3s, border-color .3s, transform .35s cubic-bezier(.34,1.2,.64,1); }
+        .wk-card:hover { background: rgba(255,255,255,0.07) !important; border-color: rgba(245,158,11,0.25) !important; transform: translateY(-6px) !important; }
+        .wk-btn { transition: opacity .2s, transform .2s, box-shadow .2s; }
+        .wk-btn:hover { opacity:.9; transform:translateY(-2px); box-shadow:0 12px 32px rgba(212,175,55,.18); }
+        .wk-wa { transition: opacity .2s, transform .2s; }
+        .wk-wa:hover { opacity:.9; transform:translateY(-2px); }
+        .wk-nav-link { color: #8B9DB5; text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
+        .wk-nav-link:hover { color: #F0EDE6; }
+        @media(max-width:640px){ .wk-hide-sm{ display:none!important; } .wk-hero-title{ font-size:2.4rem!important; } }
+      `}</style>
+
+      {/* NAVBAR */}
+      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(4,8,15,0.82)", backdropFilter:"blur(20px)", borderBottom:`1px solid ${border}`, padding:"0 40px", height:60, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <span style={{ fontSize:18, fontWeight:800, letterSpacing:"-0.5px", color:txt1 }}>
+          {P.name}<span style={{ color:gold }}>.</span>
         </span>
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition">
-            📅 Réserver un créneau →
+        <div style={{ display:"flex", gap:28, alignItems:"center" }}>
+          <div className="wk-hide-sm" style={{ display:"flex", gap:24 }}>
+            {P.navLinks.map(l => <a key={l.label} href={l.href} className="wk-nav-link">{l.label}</a>)}
+          </div>
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+            style={{ background:gold, color:"#04080F", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, fontSize:13.5, cursor:"pointer", fontFamily:"inherit" }}>
+            Reserver →
           </button>
-          <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="bg-lime-600 text-white px-5 py-2 font-bold uppercase tracking-wide text-sm hover:bg-lime-700 transition" style={{ background: "#25d366", borderColor: "#25d366" }}>
-            💬 WhatsApp →
-          </a>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
-        <div className="inline-block bg-lime-200 text-lime-800 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-widest mb-6">
-          Reporting automatisé
+      {/* HERO */}
+      <section style={{ padding:"100px 40px 80px", maxWidth:1000, margin:"0 auto", textAlign:"center", position:"relative" }}>
+        <div style={{ position:"absolute", top:-60, left:"50%", transform:"translateX(-50%)", width:700, height:600, background:`radial-gradient(ellipse at 50% 30%, ${accentGlow} 0%, transparent 60%)`, pointerEvents:"none" }} />
+        <div style={{ display:"inline-flex", alignItems:"center", gap:8, marginBottom:24, background:accentDim, border:`1px solid ${accentBorder}`, borderRadius:100, padding:"6px 18px", animation:"fadeUp .5s ease both" }}>
+          <span style={{ width:7, height:7, borderRadius:"50%", background:accent, display:"inline-block", animation:"pulseDot 2s ease-in-out infinite" }} />
+          <span style={{ color:accent, fontSize:11.5, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase" }}>{P.tagLabel}</span>
         </div>
-        <h1 style={{ fontFamily: "var(--font-display)" }} className="text-6xl md:text-7xl font-black text-slate-900 leading-none tracking-tight mb-6 uppercase">
-          Vos KPIs.<br />
-          <span className="text-lime-600">Chaque lundi.</span><br />
-          Automatiquement.
+        <h1 className="wk-hero-title" style={{ fontSize:"clamp(2.6rem,6vw,5rem)", fontWeight:700, lineHeight:1.08, letterSpacing:"-0.03em", marginBottom:28, fontFamily:"'Instrument Serif',Georgia,serif", animation:"fadeUp .5s .08s ease both" }}>
+          {P.taglines.map((line, i) => (
+            <span key={i} style={{ display:"block", color:i===P.taglineAccentIdx?accent:txt1, fontStyle:i===P.taglineAccentIdx?"italic":"normal" }}>{line}</span>
+          ))}
         </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
-          Reportly génère et livre vos rapports business personnalisés — sans manipulation manuelle, sans oublier une seule semaine.
-        </p>
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg">
-            📅 Réserver un créneau →
+        <p style={{ fontSize:"1.1rem", color:txt2, lineHeight:1.72, maxWidth:580, margin:"0 auto 48px", animation:"fadeUp .5s .16s ease both" }}>{P.desc}</p>
+        <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:14, marginBottom:44, animation:"fadeUp .5s .24s ease both" }}>
+          {P.metrics.map(m => (
+            <div key={m.label} style={{ background:card, border:`1px solid ${border}`, borderRadius:18, padding:"14px 22px", textAlign:"center", minWidth:118 }}>
+              <div style={{ fontSize:"1.7rem", fontWeight:800, color:txt1, letterSpacing:"-1.5px", lineHeight:1 }}>{m.value}</div>
+              <div style={{ fontSize:"0.62rem", color:txt3, textTransform:"uppercase", letterSpacing:"1.5px", marginTop:5 }}>{m.label}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center", animation:"fadeUp .5s .32s ease both" }}>
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+            style={{ background:gold, color:"#04080F", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
+            📅 {P.ctaPrimary}
           </button>
-          <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 text-white px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-700 transition shadow-lg" style={{ background: "#25d366", borderColor: "#25d366" }}>
-            💬 WhatsApp →
+          <a href={`https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20${encodeURIComponent(P.waText)}%20avec%20Wikolabs.`}
+            target="_blank" rel="noopener noreferrer" className="wk-wa"
+            style={{ background:"#25d366", color:"#fff", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
+            💬 WhatsApp
           </a>
         </div>
       </section>
 
-      {/* Email Preview Mockup */}
-      <section className="max-w-2xl mx-auto px-6 pb-16">
-        <div className="bg-white rounded-lg shadow-2xl border border-lime-200 overflow-hidden">
-          {/* Email header */}
-          <div className="bg-lime-600 px-6 py-4">
-            <div className="text-white text-xs mb-1 opacity-75">De: reports@reportly.app · Lundi 08:00</div>
-            <div style={{ fontFamily: "var(--font-display)" }} className="text-white text-xl font-bold uppercase tracking-wide">
-              Rapport hebdo — Semaine 21
+      {/* FEATURES */}
+      <section id="features" style={{ padding:"80px 40px", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:52 }}>
+          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Fonctionnalites</p>
+          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif", lineHeight:1.15 }}>
+            Tout automatise, <em style={{ fontStyle:"italic", color:gold }}>rien a gerer</em>
+          </h2>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 }}>
+          {P.features.map((f, i) => (
+            <div key={f.title} className="wk-card" style={{ background:card, border:`1px solid ${border}`, borderRadius:20, padding:"28px 28px 24px", position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${i===0?gold:accent},transparent)`, opacity:.6 }} />
+              <div style={{ fontSize:"2rem", marginBottom:16 }}>{f.icon}</div>
+              <h3 style={{ fontSize:"1.05rem", fontWeight:700, color:txt1, marginBottom:10 }}>{f.title}</h3>
+              <p style={{ fontSize:"0.88rem", color:txt2, lineHeight:1.7, margin:0 }}>{f.desc}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="process" style={{ padding:"80px 40px", background:bg2 }}>
+        <div style={{ maxWidth:860, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:48 }}>
+            <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Comment ca marche</p>
+            <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>
+              En place en <em style={{ fontStyle:"italic", color:accent }}>15 minutes</em>
+            </h2>
           </div>
-          {/* KPI Cards */}
-          <div className="grid grid-cols-3 gap-px bg-lime-100 border-b border-lime-100">
-            {[
-              { label: "Chiffre d'affaires", value: "142K€", delta: "+8%", up: true },
-              { label: "Nouveaux clients", value: "34", delta: "+3", up: true },
-              { label: "Taux de churn", value: "1.2%", delta: "-0.3%", up: false },
-            ].map(({ label, value, delta, up }) => (
-              <div key={label} className="bg-white px-4 py-4 text-center">
-                <div style={{ fontFamily: "var(--font-display)" }} className="text-2xl font-black text-slate-900">{value}</div>
-                <div className={`text-xs font-bold ${up ? "text-lime-600" : "text-red-500"}`}>{up ? "▲" : "▼"} {delta}</div>
-                <div className="text-xs text-slate-400 mt-1">{label}</div>
+          <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+            {P.steps.map((s, i) => (
+              <div key={s.num} style={{ display:"flex", alignItems:"flex-start", gap:22, background:card, border:`1px solid ${border}`, borderRadius:18, padding:"22px 26px" }}>
+                <div style={{ flexShrink:0, width:46, height:46, background:i===0?goldDim:accentDim, border:`1px solid ${i===0?goldBorder:accentBorder}`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", color:i===0?gold:accent, fontWeight:800, fontSize:15 }}>
+                  {s.num}
+                </div>
+                <div>
+                  <h3 style={{ fontSize:"1rem", fontWeight:700, color:txt1, marginBottom:6, lineHeight:1.3 }}>{s.title}</h3>
+                  <p style={{ fontSize:"0.87rem", color:txt2, lineHeight:1.7, margin:0 }}>{s.desc}</p>
+                </div>
               </div>
             ))}
-          </div>
-          {/* Insight text */}
-          <div className="px-6 py-5 space-y-3">
-            <p className="text-sm text-slate-700 leading-relaxed">
-              <span className="font-bold text-lime-700">Points clés de la semaine :</span> Le CA progresse pour la 4e semaine consécutive (+8%). La région Sud a surperformé de 23%. Le segment PME représente désormais 61% des nouvelles acquisitions.
-            </p>
-            <div className="flex gap-2 flex-wrap">
-              <span className="bg-lime-50 border border-lime-200 text-lime-700 text-xs px-3 py-1 rounded font-semibold">PDF joint</span>
-              <span className="bg-lime-50 border border-lime-200 text-lime-700 text-xs px-3 py-1 rounded font-semibold">Rapport Slack envoyé</span>
-              <span className="bg-lime-50 border border-lime-200 text-lime-700 text-xs px-3 py-1 rounded font-semibold">Dashboard mis à jour</span>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="bg-white py-16 border-t-4 border-lime-500">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 style={{ fontFamily: "var(--font-display)" }} className="text-4xl font-black text-slate-900 text-center uppercase tracking-tight mb-12">
-            Ce que Reportly fait pour vous
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { num: "01", title: "Templates intelligents", desc: "Choisissez parmi 30+ templates ou créez le vôtre. Reportly adapte le format à votre audience — dirigeants, équipes ou investisseurs." },
-              { num: "02", title: "Multi-canal natif", desc: "Email, Slack, PDF, Notion, Google Drive — votre rapport arrive là où votre équipe travaille, selon la cadence que vous choisissez." },
-              { num: "03", title: "Alertes sur seuils", desc: "Définissez des seuils critiques sur vos métriques. Reportly envoie une alerte immédiate si un KPI sort de la zone verte." },
-            ].map(({ num, title, desc }) => (
-              <div key={num} className="border-l-4 border-lime-500 pl-5">
-                <div style={{ fontFamily: "var(--font-display)" }} className="text-5xl font-black text-lime-200 leading-none mb-2">{num}</div>
-                <h3 style={{ fontFamily: "var(--font-display)" }} className="text-xl font-bold text-slate-900 uppercase mb-2">{title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{desc}</p>
+      {/* TESTIMONIALS */}
+      <section style={{ padding:"80px 40px", maxWidth:900, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:44 }}>
+          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Temoignages</p>
+          <h2 style={{ fontSize:"clamp(1.6rem,3vw,2.4rem)", fontWeight:700, color:txt1, fontFamily:"'Instrument Serif',Georgia,serif" }}>Ce qu'en disent nos clients</h2>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:20 }}>
+          {P.testimonials.map((t, i) => (
+            <div key={i} style={{ background:card, border:`1px solid ${border}`, borderLeft:`3px solid ${i===0?gold:accent}`, borderRadius:20, padding:"26px 26px 22px" }}>
+              <p style={{ fontSize:"0.92rem", color:txt2, lineHeight:1.75, fontStyle:"italic", marginBottom:20 }}>&ldquo;{t.quote}&rdquo;</p>
+              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+                <div style={{ width:38, height:38, borderRadius:"50%", background:i===0?goldDim:accentDim, border:`1px solid ${i===0?goldBorder:accentBorder}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>👤</div>
+                <div>
+                  <div style={{ fontSize:"0.9rem", fontWeight:700, color:txt1 }}>{t.author}</div>
+                  <div style={{ fontSize:"0.72rem", color:txt3 }}>{t.role}</div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-lime-600 py-14 text-center px-6">
-        <h2 style={{ fontFamily: "var(--font-display)" }} className="text-4xl font-black text-white uppercase tracking-tight mb-3">
-          Le prochain rapport s&rsquo;écrit tout seul.
-        </h2>
-        <p className="text-lime-100 mb-8">Setup en 15 minutes. Aucune carte bancaire requise.</p>
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition">
-            📅 Réserver un créneau →
-          </button>
-          <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20Reportly%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-lime-700 px-10 py-4 font-black text-lg uppercase tracking-wider hover:bg-lime-50 transition" style={{ background: "#25d366", borderColor: "#25d366" }}>
-            💬 WhatsApp →
-          </a>
+      <section id="cta" style={{ padding:"0 40px 100px", maxWidth:860, margin:"0 auto" }}>
+        <div style={{ background:card, border:`1px solid ${goldBorder}`, borderRadius:24, padding:"64px 48px", textAlign:"center", backgroundImage:`radial-gradient(ellipse at 50% 0%, ${goldDim} 0%, transparent 65%)` }}>
+          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:16 }}>Demarrer</p>
+          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, marginBottom:14, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>{P.ctaTitle}</h2>
+          <p style={{ color:txt2, fontSize:"1rem", marginBottom:36, lineHeight:1.7 }}>{P.ctaDesc}</p>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center" }}>
+            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+              style={{ background:gold, color:"#04080F", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
+              📅 {P.ctaPrimary}
+            </button>
+            <a href={`https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20${encodeURIComponent(P.waText)}%20avec%20Wikolabs.`}
+              target="_blank" rel="noopener noreferrer" className="wk-wa"
+              style={{ background:"#25d366", color:"#fff", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
+              💬 WhatsApp
+            </a>
+          </div>
         </div>
       </section>
 
-      <footer className="text-center py-5 text-slate-400 text-sm bg-white border-t border-lime-100">
-        <p>&copy; 2025 Reportly &mdash; Un produit Wikolabs</p>
-        <div className="flex flex-wrap justify-center gap-4 mt-2 text-xs text-slate-400">
-          <a href="mailto:team@wikolabs.com" className="hover:text-slate-600 transition-colors">team@wikolabs.com</a>
-          <span>·</span>
-          <a href="tel:+261386626100" className="hover:text-slate-600 transition-colors">+261 38 66 261 00</a>
-          <span>·</span>
-          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors" style={{cursor:"pointer",background:"none",border:"none",padding:0,font:"inherit",color:"inherit",textDecoration:"none"}}>Prendre RDV</button>
+      {/* FOOTER */}
+      <footer style={{ borderTop:`1px solid ${border}`, padding:"32px 40px" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:16 }}>
+          <div>
+            <span style={{ fontWeight:800, fontSize:16, color:txt1 }}>{P.name}</span><span style={{ color:gold }}>.</span>
+            <span style={{ display:"block", fontSize:12, color:txt3, marginTop:3 }}>{P.footerTagline}</span>
+          </div>
+          <p style={{ fontSize:13, color:txt3 }}>© 2026 {P.name} — Un produit <a href="https://wikolabs.com" style={{ color:txt2, textDecoration:"none" }}>Wikolabs</a></p>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:16, fontSize:13, alignItems:"center" }}>
+            <a href="mailto:team@wikolabs.com" style={{ color:txt3, textDecoration:"none" }}>team@wikolabs.com</a>
+            <span style={{ color:txt3 }}>·</span>
+            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' style={{ background:"none", border:"none", color:txt3, fontSize:13, cursor:"pointer", fontFamily:"inherit", padding:0 }}>Prendre RDV</button>
+          </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
