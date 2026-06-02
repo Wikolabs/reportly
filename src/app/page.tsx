@@ -1,358 +1,254 @@
 "use client";
 import { useState } from "react";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CONFIG — Each LP customizes only this block
-// ─────────────────────────────────────────────────────────────────────────────
-const P = {
-  name: "Reportly",
-  waPhone: "261386626100",
-  tools: [
-    { name: "Slack", slug: "slack" },
-    { name: "Notion", slug: "notion" },
-    { name: "GoogleBigQuery", slug: "googlebigquery" },
-    { name: "Tableau", slug: "tableau" },
-    { name: "Groq", slug: "groq" },
-  ],
-  palette: {
-    mode: "light" as "dark" | "light",
-    bg: "#F7FEE7",
-    bg2: "#ECFCCB",
-    surface: "rgba(0,0,0,0.035)",
-    border: "rgba(0,0,0,0.08)",
-    txt1: "#161F0A",
-    txt2: "#4D5A3C",
-    txt3: "#8A977A",
-    accent: "#4D7C0F",
-    accentSoft: "rgba(77,124,15,0.10)",
-    accentBorder: "rgba(77,124,15,0.30)",
-    accentGlow: "rgba(77,124,15,0.15)",
-    navBg: "rgba(247,254,231,0.85)",
-  },
-  content: {
-    fr: {
-      langLabel: "FR",
-      tagLabel: "Reporting automatise · KPIs · Multi-canal",
-      taglines: ["Vos donnees collectees.", "Votre rapport redige tout seul.", "Chaque lundi a 8h."],
-      taglineAccentIdx: 1,
-      desc: "Reportly connecte toutes vos sources de donnees, genere des rapports business personnalises et les livre a votre equipe — par email, Slack ou PDF — selon la cadence que vous choisissez.",
-      navLinks: [
-        { label: "Fonctionnalites", href: "#features" },
-        { label: "Comment ca marche", href: "#process" },
-        { label: "Pourquoi maintenant", href: "#why" },
-        { label: "Contact", href: "#cta" },
-      ],
-      metrics: [
-        { value: "30+", label: "templates inclus" },
-        { value: "12h", label: "economisees / semaine" },
-        { value: "0", label: "rapport oublie" },
-        { value: "100%", label: "automatise" },
-      ],
-      features: [
-        { icon: "📊", title: "Templates intelligents", desc: "Choisissez parmi 30+ templates ou creez le votre. Reportly adapte la mise en page et le niveau de detail selon l'audience : dirigeants, equipes ou investisseurs." },
-        { icon: "📡", title: "Multi-canal natif", desc: "Email, Slack, PDF, Notion, Google Drive — votre rapport arrive la ou votre equipe travaille, automatiquement, selon la cadence hebdomadaire ou mensuelle configuree." },
-        { icon: "🔔", title: "Alertes sur seuils", desc: "Definissez des seuils critiques sur vos KPIs. Reportly envoie une alerte immediate si une metrique sort de la zone verte, sans attendre le prochain rapport." },
-      ],
-      steps: [
-        { num: "01", title: "Connectez vos sources", desc: "CRM, ERP, Google Analytics, Stripe, HubSpot — Reportly centralise toutes vos donnees en quelques clics. Aucun code, aucune ETL a configurer." },
-        { num: "02", title: "Configurez votre rapport", desc: "Choisissez les metriques, la periode, le template et les destinataires. L'IA adapte la narrative et met en avant les tendances significatives." },
-        { num: "03", title: "Le rapport s'envoie automatiquement", desc: "Chaque lundi a 8h (ou selon votre cadence), le rapport est genere, verifie et livre. Votre equipe lit, vous decidez." },
-      ],
-      persuasion: {
-        sectionTag: "Pourquoi maintenant",
-        title: "Vos reportings hebdo coutent plus cher que ce qu'ils rapportent.",
-        paragraphs: [
-          { type: "pathos", text: "Vendredi 16h45. Votre Chief of Staff est encore dans Excel pour fusionner les exports Salesforce, Stripe, Mixpanel et Notion en une slide deck propre pour le comite de lundi. Elle a passe 4 heures cette semaine sur la consolidation, et 90 minutes sur le storytelling — qui ne sera pas lu. Le CEO survolera, posera une question sur un chiffre qu'elle a oublie de croiser, et lundi soir elle relancera le cycle pour la 47eme semaine consecutive. Pendant ce temps, le vrai signal — un decrochage MQL en region DACH — passe inapercu jusqu'au mois suivant." },
-          { type: "logos", text: "PwC a mesure en 2025 que les equipes ops/finance des scale-ups B2B passent en moyenne 14h par semaine en assemblage de rapports manuels, dont 67% sont obsoletes le jour ou ils sont lus. Gartner indique que les entreprises avec reporting automatise prennent leurs decisions financieres 2.7x plus vite et detectent les anomalies 4 jours plus tot. McKinsey estime le ROI d'un reporting automatise a 18x sur 24 mois." },
-          { type: "ethos", text: "Wikolabs construit des agents IA en production depuis 2023 pour des scale-ups B2B, family offices et fintechs reglementees. Nous avons brule nos doigts sur les memes problemes que vous : pipelines qui hallucinent, briefs ignores, dashboards desertes. Reportly est ce que nous avons construit pour nos propres clients exigeants avant de le proposer au marche." },
-          { type: "solution", text: "Concretement : Reportly se branche sur votre CRM, ERP, Stripe, GA et HubSpot en quelques clics, ingere les donnees, applique le template de votre choix (board, equipe, investisseurs), et chaque lundi a 8h le rapport est dans la boite mail ou le Slack des bons destinataires — avec narrative IA et alertes sur les KPIs hors de la zone verte. Resultat : 12h economisees par semaine, zero rapport oublie, et un pilotage hebdomadaire enfin reel." },
-        ],
-      },
-      ctaTitle: "Votre prochain reporting hebdo s'envoie sans vous",
-      ctaDesc: "Connexion des sources en 30 minutes. Premier rapport livre lundi prochain. Aucune carte bancaire.",
-      ctaPrimary: "Reserver un appel",
-      ctaWhatsApp: "WhatsApp",
-      ctaDemo: "Demander une demo",
-      ctaSoonBadge: "Bientot",
-      footerTagline: "Reporting business automatise pour scale-ups",
-    },
-    en: {
-      langLabel: "EN",
-      tagLabel: "Automated reporting · KPIs · Multi-channel",
-      taglines: ["Your data gathered.", "Your report writes itself.", "Every Monday at 8am."],
-      taglineAccentIdx: 1,
-      desc: "Reportly connects all your data sources, generates personalized business reports and delivers them to your team — by email, Slack or PDF — on the cadence you choose.",
-      navLinks: [
-        { label: "Features", href: "#features" },
-        { label: "How it works", href: "#process" },
-        { label: "Why now", href: "#why" },
-        { label: "Contact", href: "#cta" },
-      ],
-      metrics: [
-        { value: "30+", label: "templates included" },
-        { value: "12h", label: "saved / week" },
-        { value: "0", label: "report forgotten" },
-        { value: "100%", label: "automated" },
-      ],
-      features: [
-        { icon: "📊", title: "Smart templates", desc: "Choose from 30+ templates or build your own. Reportly adapts layout and detail level to the audience: executives, teams or investors." },
-        { icon: "📡", title: "Native multi-channel", desc: "Email, Slack, PDF, Notion, Google Drive — your report arrives where your team works, automatically, on your weekly or monthly cadence." },
-        { icon: "🔔", title: "Threshold alerts", desc: "Set critical thresholds on your KPIs. Reportly fires an immediate alert if a metric leaves the green zone, without waiting for the next report." },
-      ],
-      steps: [
-        { num: "01", title: "Connect your sources", desc: "CRM, ERP, Google Analytics, Stripe, HubSpot — Reportly centralizes all your data in a few clicks. No code, no ETL to configure." },
-        { num: "02", title: "Configure your report", desc: "Choose metrics, period, template and recipients. The AI adapts the narrative and surfaces the meaningful trends." },
-        { num: "03", title: "The report sends itself", desc: "Every Monday at 8am (or on your cadence), the report is generated, verified and delivered. Your team reads, you decide." },
-      ],
-      persuasion: {
-        sectionTag: "Why now",
-        title: "Your weekly reports cost more than they pay back.",
-        paragraphs: [
-          { type: "pathos", text: "Friday 4:45pm. Your Chief of Staff is still in Excel merging Salesforce, Stripe, Mixpanel and Notion exports into a clean deck for Monday's committee. She spent 4 hours this week on consolidation, and 90 minutes on storytelling — which won't be read. The CEO will skim, ask about a number she forgot to cross-reference, and Monday night she'll restart the cycle for the 47th consecutive week. Meanwhile, the real signal — an MQL drop in DACH — will go unnoticed until next month." },
-          { type: "logos", text: "PwC measured in 2025 that ops/finance teams at B2B scale-ups spend on average 14h per week assembling manual reports, of which 67% are stale the day they're read. Gartner indicates that companies with automated reporting make financial decisions 2.7x faster and detect anomalies 4 days earlier. McKinsey estimates the ROI of automated reporting at 18x over 24 months." },
-          { type: "ethos", text: "Wikolabs has been building production AI agents since 2023 for B2B scale-ups, family offices and regulated fintechs. We burned our fingers on the same problems you face: hallucinating pipelines, ignored briefs, abandoned dashboards. Reportly is what we built for our own demanding customers before bringing it to market." },
-          { type: "solution", text: "Concretely: Reportly plugs into your CRM, ERP, Stripe, GA and HubSpot in a few clicks, ingests the data, applies the template of your choice (board, team, investors), and every Monday at 8am the report is in the right inboxes or Slack channels — with AI narrative and alerts on KPIs outside the green zone. Result: 12h saved per week, zero forgotten report, and weekly steering finally real." },
-        ],
-      },
-      ctaTitle: "Your next weekly report sends itself",
-      ctaDesc: "Source connection in 30 minutes. First report delivered next Monday. No credit card.",
-      ctaPrimary: "Book a call",
-      ctaWhatsApp: "WhatsApp",
-      ctaDemo: "Request a demo",
-      ctaSoonBadge: "Soon",
-      footerTagline: "Automated business reporting for scale-ups",
-    },
-  },
+const PRODUCT = "Reportly";
+
+const PAL = {
+  bg: "#F7FEE7",
+  bg2: "#ECFCCB",
+  surface: "rgba(0,0,0,0.035)",
+  surfaceHover: "rgba(0,0,0,0.06)",
+  border: "rgba(0,0,0,0.08)",
+  txt1: "#161F0A",
+  txt2: "#4D5A3C",
+  txt3: "#8A977A",
+  accent: "#4D7C0F",
+  accentSoft: "rgba(77,124,15,0.10)",
+  accentBorder: "rgba(77,124,15,0.30)",
+  accentGlow: "rgba(77,124,15,0.15)",
+  navBg: "rgba(247,254,231,0.85)",
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPONENT — identical for all LPs
-// ─────────────────────────────────────────────────────────────────────────────
-export default function Page() {
-  const [lang, setLang] = useState<"fr" | "en">("fr");
-  const t = P.content[lang];
-  const pal = P.palette;
-  const isDark = pal.mode === "dark";
-  const cardOverlayHover = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+const EXAMPLE_FR = `Periode : Semaine 47 (18-24 novembre 2026)
 
-  const waLink = `https://wa.me/${P.waPhone}?text=${encodeURIComponent(
-    lang === "fr"
-      ? `Bonjour, je souhaite discuter de ${P.name} avec Wikolabs.`
-      : `Hello, I'd like to discuss ${P.name} with Wikolabs.`
-  )}`;
+MRR net : 412k EUR (vs 399k S-1)
+Nouveaux logos : 11 (vs 10 S-1)
+Churn rate : 1.4% (vs 1.1% S-1)
+ARR au 24/11 : 4.94M EUR (objectif Q4 5.2M)
+MQL total : 627 (vs 692 S-1)
+MQL DACH : 87 (vs 112 S-1)
+MQL FR : 240 (vs 235 S-1)
+Conversion MQL > SQL : 18% (vs 16% S-1)
+Conversion SQL > closed-won : 28% (vs 24% S-1)
+Pipeline coverage Q4 : 2.4x (vs 2.2x S-1)
+CAC : 8.6k EUR (vs 8.9k S-1)
+CAC payback : 11.2 mois (vs 12.0 moyenne Q3)
+NPS : 47 (vs 44 mois precedent)`;
+
+const EXAMPLE_EN = `Period: Week 47 (Nov 18-24, 2026)
+
+Net MRR: 412k EUR (vs 399k W-1)
+New logos: 11 (vs 10 W-1)
+Churn rate: 1.4% (vs 1.1% W-1)
+ARR as of Nov 24: 4.94M EUR (Q4 target 5.2M)
+Total MQLs: 627 (vs 692 W-1)
+DACH MQLs: 87 (vs 112 W-1)
+FR MQLs: 240 (vs 235 W-1)
+MQL > SQL conversion: 18% (vs 16% W-1)
+SQL > closed-won: 28% (vs 24% W-1)
+Q4 pipeline coverage: 2.4x (vs 2.2x W-1)
+CAC: 8.6k EUR (vs 8.9k W-1)
+CAC payback: 11.2 months (vs 12.0 Q3 avg)
+NPS: 47 (vs 44 previous month)`;
+
+export default function DemoPage() {
+  const [lang, setLang] = useState<"fr" | "en">("fr");
+  const [audience, setAudience] = useState("");
+  const [period, setPeriod] = useState("");
+  const [kpis, setKpis] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [brief, setBrief] = useState("");
+  const [model, setModel] = useState("");
+  const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
+  const [staticMode, setStaticMode] = useState(false);
+
+  const t = lang === "fr" ? {
+    back: "Retour", title: "Demo", sub: PRODUCT + " — rapport executif automatise",
+    desc: "Collez vos KPIs bruts (chiffres + comparaisons). L'agent IA produit un rapport executif au format COMEX : resume, metriques cles, anomalies, recommandations. Aucune source de donnees reelle interrogee — c'est un POC qui montre la logique de production.",
+    inputLabel: "KPIs bruts",
+    audiencePh: "Audience (ex: COMEX, Board)",
+    periodPh: "Periode (ex: S47 — 18-24 nov.)",
+    kpisPh: "Collez vos KPIs bruts (un par ligne, avec comparaisons)...",
+    loadExample: "Charger un exemple",
+    generate: "Generer le rapport", generating: "Generation en cours...",
+    briefTitle: "Rapport executif", emptyHint: "Le rapport s'affiche ici une fois genere.",
+    sendEmail: "Envoyer par email", postSlack: "Publier dans Slack #leadership",
+    exportPdf: "Exporter en PDF",
+    emailMock: "Rapport envoye aux destinataires du COMEX (mode demo, pas d'envoi reel d'email)",
+    slackMock: "Rapport publie dans #leadership avec mention COMEX (mode demo, pas de connexion reelle Slack)",
+    pdfMock: "PDF genere et stocke dans Google Drive (mode demo, pas de generation reelle)",
+    fallback: "Mode statique : la cle LLM sera ajoutee au prochain deploiement.",
+    poweredBy: "Modele :",
+    note: "DEMO POC — aucune connexion reelle a Salesforce, Stripe, HubSpot, Mixpanel, Slack ou Google Drive. L'IA redige le rapport pour la demonstration.",
+  } : {
+    back: "Back", title: "Demo", sub: PRODUCT + " — automated executive report",
+    desc: "Paste your raw KPIs (numbers + comparisons). The AI agent produces an executive report in leadership format: summary, key metrics, anomalies, recommendations. No real data source queried — this is a POC showing the production logic.",
+    inputLabel: "Raw KPIs",
+    audiencePh: "Audience (e.g. Leadership, Board)",
+    periodPh: "Period (e.g. W47 — Nov 18-24)",
+    kpisPh: "Paste your raw KPIs (one per line, with comparisons)...",
+    loadExample: "Load example",
+    generate: "Generate report", generating: "Generating...",
+    briefTitle: "Executive report", emptyHint: "The report will appear here once generated.",
+    sendEmail: "Send by email", postSlack: "Post to Slack #leadership",
+    exportPdf: "Export PDF",
+    emailMock: "Report sent to leadership recipients (demo mode, no real email send)",
+    slackMock: "Report posted in #leadership with leadership mention (demo mode, no real Slack connection)",
+    pdfMock: "PDF generated and stored in Google Drive (demo mode, no real generation)",
+    fallback: "Static mode: LLM key will be added at next deploy.",
+    poweredBy: "Model:",
+    note: "DEMO POC — no real connection to Salesforce, Stripe, HubSpot, Mixpanel, Slack or Google Drive. The AI writes the report for demonstration.",
+  };
+
+  async function generate() {
+    setError(""); setBrief(""); setModel(""); setStaticMode(false);
+    if (!kpis.trim()) {
+      setError(lang === "fr" ? "Collez vos KPIs." : "Paste your KPIs.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const r = await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kpis, audience, period, lang }),
+      });
+      const j = await r.json();
+      if (j.error === "llm_not_configured") {
+        setBrief(j.mockBrief || "");
+        setStaticMode(true);
+      } else if (j.error) {
+        setError(j.message || j.error);
+      } else {
+        setBrief(j.brief || "");
+        setModel(j.model || "");
+      }
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "unknown_error");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function showToast(msg: string) {
+    setToast(msg);
+    setTimeout(() => setToast(""), 3200);
+  }
 
   return (
-    <div style={{ minHeight: "100vh", background: pal.bg, color: pal.txt1 }}>
+    <div style={{ minHeight: "100vh", background: PAL.bg, color: PAL.txt1, display: "flex", flexDirection: "column" }}>
       <style>{`
         *, *::before, *::after { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        @keyframes wkBgShift { 0% { transform: translate3d(0,0,0) rotate(0deg); } 50% { transform: translate3d(-2%, 1.5%, 0) rotate(180deg); } 100% { transform: translate3d(0,0,0) rotate(360deg); } }
-        .wk-bg-fx { position: fixed; inset: -10%; pointer-events: none; z-index: 0; opacity: .55; will-change: transform; animation: wkBgShift 38s linear infinite; }
-        .wk-bg-fx::before, .wk-bg-fx::after { content: ""; position: absolute; inset: 0; }
-        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes pulseDot { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(1.6); } }
-        .wk-card { transition: background .3s, border-color .3s, transform .35s cubic-bezier(.34,1.2,.64,1); }
-        .wk-card:hover { background: ${cardOverlayHover} !important; border-color: ${pal.accentBorder} !important; transform: translateY(-6px); }
-        .wk-btn { transition: opacity .2s, transform .2s, box-shadow .2s; }
-        .wk-btn:hover { opacity:.92; transform:translateY(-2px); box-shadow:0 12px 32px ${pal.accentGlow}; }
-        .wk-btn-wa { transition: opacity .2s, transform .2s; }
-        .wk-btn-wa:hover { opacity:.92; transform:translateY(-2px); }
-        .wk-btn-demo { opacity:.78; transition: opacity .2s, transform .2s, background .2s; }
-        .wk-btn-demo:hover { opacity:1; transform:translateY(-2px); background:${pal.accentSoft}!important; }
-        .wk-nav-link { color:${pal.txt2}; text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
-        .wk-nav-link:hover { color:${pal.txt1}; }
-        .wk-lang { display:inline-flex; border:1px solid ${pal.border}; border-radius:100px; padding:2px; background:${pal.surface}; }
-        .wk-lang button { background:transparent; border:none; padding:4px 12px; font-size:11px; font-weight:700; letter-spacing:.5px; cursor:pointer; border-radius:100px; color:${pal.txt2}; transition: background .2s, color .2s; font-family:inherit; }
-        .wk-lang button.active { background:${pal.accent}; color:${isDark ? "#04080F" : "#FFFFFF"}; }
-        @media(max-width:768px){
-          .wk-hide-sm{ display:none!important; }
-          .wk-hero-title{ font-size:2.4rem!important; }
-          .wk-section{ padding-left:20px!important; padding-right:20px!important; }
-          .wk-cards-grid{ grid-template-columns: 1fr !important; max-width:380px; margin-left:auto; margin-right:auto; }
-          .wk-metrics-row{ justify-content:center; }
-          .wk-cta-row{ flex-direction:column; align-items:stretch; max-width:340px; margin-left:auto; margin-right:auto; }
-          .wk-cta-row > *{ width:100%; justify-content:center; }
-          .wk-persuasion{ padding:60px 20px!important; }
-          .wk-foot{ flex-direction:column; gap:12px; text-align:center; }
-        }
+        body { margin: 0; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        .wk-input { width: 100%; padding: 12px 14px; border-radius: 10px; background: ${PAL.surface}; border: 1px solid ${PAL.border}; color: ${PAL.txt1}; font-family: inherit; font-size: 14px; transition: border-color .2s, background .2s; }
+        .wk-input:focus { outline: none; border-color: ${PAL.accent}; background: ${PAL.surfaceHover}; }
+        .wk-textarea { width: 100%; padding: 12px 14px; border-radius: 10px; background: ${PAL.surface}; border: 1px solid ${PAL.border}; color: ${PAL.txt1}; font-family: monospace; font-size: 12px; resize: vertical; min-height: 220px; line-height: 1.55; }
+        .wk-textarea:focus { outline: none; border-color: ${PAL.accent}; background: ${PAL.surfaceHover}; }
+        .wk-btn-primary { background: ${PAL.accent}; color: #FFFFFF; border: none; border-radius: 10px; padding: 13px 22px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; transition: opacity .2s, transform .2s; display: inline-flex; align-items: center; gap: 8px; }
+        .wk-btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+        .wk-btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+        .wk-btn-ghost { background: ${PAL.surface}; color: ${PAL.txt1}; border: 1px solid ${PAL.border}; border-radius: 10px; padding: 9px 14px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s; display: inline-flex; align-items: center; gap: 6px; }
+        .wk-btn-ghost:hover { background: ${PAL.surfaceHover}; border-color: ${PAL.accentBorder}; }
+        .wk-md p, .wk-md ul { margin: 0 0 10px; }
+        .wk-md ul { padding-left: 18px; }
+        .wk-md li { margin-bottom: 4px; line-height: 1.65; }
+        .wk-md strong { color: ${PAL.accent}; font-weight: 700; display: block; margin-top: 10px; margin-bottom: 4px; font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; }
+        @media (max-width: 768px) { .demo-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
-      {/* NAVBAR */}
-      <nav className="wk-section" style={{ position:"sticky", top:0, zIndex:100, background:pal.navBg, backdropFilter:"blur(20px)", borderBottom:`1px solid ${pal.border}`, padding:"0 40px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <span style={{ fontSize:18, fontWeight:800, letterSpacing:"-0.5px", color:pal.txt1 }}>
-          {P.name}<span style={{ color:pal.accent }}>.</span>
-        </span>
-        <div style={{ display:"flex", gap:24, alignItems:"center" }}>
-          <div className="wk-hide-sm" style={{ display:"flex", gap:22 }}>
-            {t.navLinks.map(l => <a key={l.label} href={l.href} className="wk-nav-link">{l.label}</a>)}
-          </div>
-          <div className="wk-lang" role="group" aria-label="language">
-            <button type="button" className={lang==="fr"?"active":""} onClick={()=>setLang("fr")}>FR</button>
-            <button type="button" className={lang==="en"?"active":""} onClick={()=>setLang("en")}>EN</button>
-          </div>
-          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
-            style={{ background:pal.accent, color:isDark?"#04080F":"#FFFFFF", border:"none", borderRadius:8, padding:"9px 18px", fontWeight:700, fontSize:13.5, cursor:"pointer", fontFamily:"inherit" }}>
-            {t.ctaPrimary} →
-          </button>
+      <nav style={{ padding: "16px 32px", borderBottom: `1px solid ${PAL.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", background: PAL.navBg, backdropFilter: "blur(20px)", position: "sticky", top: 0, zIndex: 10 }}>
+        <a href="/" style={{ color: PAL.accent, textDecoration: "none", fontSize: 14, fontWeight: 600 }}>
+          ← {t.back} {PRODUCT}<span style={{ color: PAL.accent }}>.</span>
+        </a>
+        <div style={{ display: "inline-flex", border: `1px solid ${PAL.border}`, borderRadius: 100, padding: 2, background: PAL.surface }}>
+          <button onClick={() => setLang("fr")} style={{ background: lang === "fr" ? PAL.accent : "transparent", color: lang === "fr" ? "#FFFFFF" : PAL.txt2, border: "none", padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer", borderRadius: 100, fontFamily: "inherit" }}>FR</button>
+          <button onClick={() => setLang("en")} style={{ background: lang === "en" ? PAL.accent : "transparent", color: lang === "en" ? "#FFFFFF" : PAL.txt2, border: "none", padding: "4px 12px", fontSize: 11, fontWeight: 700, cursor: "pointer", borderRadius: 100, fontFamily: "inherit" }}>EN</button>
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="wk-section" style={{ padding:"100px 40px 80px", maxWidth:1040, margin:"0 auto", textAlign:"center", position:"relative" }}>
-        <div style={{ position:"absolute", top:-60, left:"50%", transform:"translateX(-50%)", width:720, height:600, background:`radial-gradient(ellipse at 50% 30%, ${pal.accentGlow} 0%, transparent 60%)`, pointerEvents:"none" }} />
-        <div style={{ display:"inline-flex", alignItems:"center", gap:8, marginBottom:24, background:pal.accentSoft, border:`1px solid ${pal.accentBorder}`, borderRadius:100, padding:"6px 18px", animation:"fadeUp .5s ease both" }}>
-          <span style={{ width:7, height:7, borderRadius:"50%", background:pal.accent, display:"inline-block", animation:"pulseDot 2s ease-in-out infinite" }} />
-          <span style={{ color:pal.accent, fontSize:11.5, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase" }}>{t.tagLabel}</span>
-        </div>
-        <h1 className="wk-hero-title" style={{ fontSize:"clamp(2.6rem,6vw,5rem)", fontWeight:700, lineHeight:1.08, letterSpacing:"-0.03em", marginBottom:28, fontFamily:"'Instrument Serif',Georgia,serif", animation:"fadeUp .5s .08s ease both" }}>
-          {t.taglines.map((line, i) => (
-            <span key={i} style={{ display:"block", color:i===t.taglineAccentIdx?pal.accent:pal.txt1, fontStyle:i===t.taglineAccentIdx?"italic":"normal" }}>{line}</span>
-          ))}
+      <main style={{ flex: 1, padding: "32px", maxWidth: 1200, margin: "0 auto", width: "100%" }}>
+        <h1 style={{ fontFamily: "'Instrument Serif',Georgia,serif", fontSize: "clamp(1.8rem,3.5vw,2.6rem)", fontWeight: 700, margin: "0 0 6px" }}>
+          {t.title} · <em style={{ fontStyle: "italic", color: PAL.accent }}>{PRODUCT}</em>
         </h1>
-        <p style={{ fontSize:"1.1rem", color:pal.txt2, lineHeight:1.72, maxWidth:600, margin:"0 auto 44px", animation:"fadeUp .5s .16s ease both" }}>{t.desc}</p>
-        <div className="wk-metrics-row" style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:14, marginBottom:44, animation:"fadeUp .5s .24s ease both" }}>
-          {t.metrics.map(m => (
-            <div key={m.label} style={{ background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:18, padding:"14px 22px", textAlign:"center", minWidth:118 }}>
-              <div style={{ fontSize:"1.7rem", fontWeight:800, color:pal.txt1, letterSpacing:"-1.5px", lineHeight:1 }}>{m.value}</div>
-              <div style={{ fontSize:"0.62rem", color:pal.txt3, textTransform:"uppercase", letterSpacing:"1.5px", marginTop:5 }}>{m.label}</div>
-            </div>
-          ))}
-        </div>
-        <CtaRow t={t} pal={pal} isDark={isDark} waLink={waLink} />
-      </section>
+        <p style={{ color: PAL.txt2, fontSize: "0.95rem", lineHeight: 1.65, maxWidth: 720, margin: "0 0 6px" }}>{t.sub}</p>
+        <p style={{ color: PAL.txt3, fontSize: "0.78rem", lineHeight: 1.55, maxWidth: 720, margin: "0 0 28px" }}>{t.desc}</p>
 
-      {/* FEATURES */}
-      <section id="features" className="wk-section" style={{ padding:"80px 40px", maxWidth:1100, margin:"0 auto" }}>
-        <SectionHead pal={pal} tag={lang==="fr"?"Fonctionnalites":"Features"} title={lang==="fr"?"Tout automatise, <em>rien a gerer</em>":"Fully automated, <em>nothing to manage</em>"} />
-        <div className="wk-cards-grid" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 }}>
-          {t.features.map((f, i) => (
-            <div key={f.title} className="wk-card" style={{ background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:20, padding:"28px 28px 26px", position:"relative", overflow:"hidden" }}>
-              <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${pal.accent},transparent)`, opacity:.55 }} />
-              <div style={{ fontSize:"2rem", marginBottom:16 }}>{f.icon}</div>
-              <h3 style={{ fontSize:"1.05rem", fontWeight:700, color:pal.txt1, marginBottom:10 }}>{f.title}</h3>
-              <p style={{ fontSize:"0.88rem", color:pal.txt2, lineHeight:1.7, margin:0 }}>{f.desc}</p>
+        <div className="demo-grid" style={{ display: "grid", gridTemplateColumns: "440px 1fr", gap: 24 }}>
+          <section style={{ background: PAL.surface, border: `1px solid ${PAL.border}`, borderRadius: 16, padding: 22 }}>
+            <h2 style={{ fontSize: "0.72rem", color: PAL.txt3, textTransform: "uppercase", letterSpacing: 2, fontWeight: 700, margin: "0 0 14px" }}>{t.inputLabel}</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 14 }}>
+              <input className="wk-input" value={audience} onChange={(e) => setAudience(e.target.value)} placeholder={t.audiencePh} />
+              <input className="wk-input" value={period} onChange={(e) => setPeriod(e.target.value)} placeholder={t.periodPh} />
+              <textarea className="wk-textarea" value={kpis} onChange={(e) => setKpis(e.target.value)} placeholder={t.kpisPh} />
+              <button type="button" onClick={() => setKpis(lang === "fr" ? EXAMPLE_FR : EXAMPLE_EN)} style={{ background: "transparent", border: "none", color: PAL.accent, fontSize: 12, fontWeight: 600, cursor: "pointer", textAlign: "left", padding: 0, fontFamily: "inherit" }}>↳ {t.loadExample}</button>
             </div>
-          ))}
-        </div>
-      </section>
+            <button className="wk-btn-primary" disabled={loading} onClick={generate} style={{ width: "100%", justifyContent: "center" }}>
+              {loading ? `⏳ ${t.generating}` : `📊 ${t.generate}`}
+            </button>
+            {error && <div style={{ marginTop: 12, color: "#B91C1C", fontSize: 13, padding: "8px 12px", background: "rgba(185,28,28,0.08)", border: "1px solid rgba(185,28,28,0.3)", borderRadius: 8 }}>{error}</div>}
+            <p style={{ color: PAL.txt3, fontSize: 11, lineHeight: 1.5, marginTop: 18, marginBottom: 0, paddingTop: 14, borderTop: `1px solid ${PAL.border}` }}>{t.note}</p>
+          </section>
 
-      {/* HOW IT WORKS */}
-      <section id="process" className="wk-section" style={{ padding:"80px 40px", background:pal.bg2 }}>
-        <div style={{ maxWidth:860, margin:"0 auto" }}>
-          <SectionHead pal={pal} tag={lang==="fr"?"Comment ca marche":"How it works"} title={lang==="fr"?"En place en <em>10 minutes</em>":"Live in <em>10 minutes</em>"} />
-          <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-            {t.steps.map((s, i) => (
-              <div key={s.num} style={{ display:"flex", alignItems:"flex-start", gap:22, background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:18, padding:"22px 26px" }}>
-                <div style={{ flexShrink:0, width:46, height:46, background:pal.accentSoft, border:`1px solid ${pal.accentBorder}`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", color:pal.accent, fontWeight:800, fontSize:15 }}>
-                  {s.num}
-                </div>
-                <div>
-                  <h3 style={{ fontSize:"1rem", fontWeight:700, color:pal.txt1, marginBottom:6, lineHeight:1.3 }}>{s.title}</h3>
-                  <p style={{ fontSize:"0.87rem", color:pal.txt2, lineHeight:1.7, margin:0 }}>{s.desc}</p>
-                </div>
+          <section style={{ background: PAL.bg2, border: `1px solid ${PAL.border}`, borderRadius: 16, padding: 22, minHeight: 420, display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+              <h2 style={{ fontSize: "0.72rem", color: PAL.txt3, textTransform: "uppercase", letterSpacing: 2, fontWeight: 700, margin: 0, display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: brief ? "#15803D" : PAL.txt3 }} />
+                {t.briefTitle}
+              </h2>
+              {model && <span style={{ fontSize: 10, color: PAL.txt3, fontFamily: "monospace" }}>{t.poweredBy} {model}</span>}
+            </div>
+
+            {!brief ? (
+              <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: PAL.txt3, fontSize: 14, textAlign: "center", padding: 30 }}>{t.emptyHint}</div>
+            ) : (
+              <div className="wk-md" style={{ color: PAL.txt1, fontSize: 14, lineHeight: 1.7, flex: 1 }} dangerouslySetInnerHTML={{ __html: renderMarkdown(brief) }} />
+            )}
+
+            {brief && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 18, paddingTop: 18, borderTop: `1px solid ${PAL.border}` }}>
+                <button className="wk-btn-ghost" onClick={() => showToast(t.emailMock)}>📧 {t.sendEmail}</button>
+                <button className="wk-btn-ghost" onClick={() => showToast(t.slackMock)}>💬 {t.postSlack}</button>
+                <button className="wk-btn-ghost" onClick={() => showToast(t.pdfMock)}>📄 {t.exportPdf}</button>
               </div>
-            ))}
-          </div>
+            )}
+            {staticMode && <div style={{ marginTop: 14, color: PAL.txt3, fontSize: 12, fontStyle: "italic" }}>{t.fallback}</div>}
+          </section>
         </div>
-      </section>
+      </main>
 
-      {/* TOOLS INTEGRATED — logos of the stack we operate for you */}
-      <section id="tools" className="wk-section" style={{ padding:"80px 40px", maxWidth:1100, margin:"0 auto" }}>
-        <SectionHead pal={pal} tag={lang==="fr"?"Outils integres":"Tools we operate"} title={lang==="fr"?"On opere <em>votre stack</em>, vous n'avez rien a apprendre":"We operate <em>your stack</em>, you don't have to learn it"} />
-        <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:12 }}>
-          {P.tools.map(tool => (
-            <div key={tool.slug} style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"10px 16px", background:pal.surface, border:`1px solid ${pal.border}`, borderRadius:100, fontSize:13, color:pal.txt1, fontWeight:600, transition:"transform .2s, border-color .2s" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`https://cdn.simpleicons.org/${tool.slug}/${pal.accent.replace('#','')}`} alt={tool.name} width={18} height={18} style={{ flexShrink:0 }} />
-              <span>{tool.name}</span>
-            </div>
-          ))}
+      {toast && (
+        <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", background: PAL.bg2, border: `1px solid ${PAL.accentBorder}`, borderRadius: 12, padding: "12px 20px", color: PAL.txt1, fontSize: 13, fontWeight: 600, zIndex: 50, backdropFilter: "blur(20px)", boxShadow: "0 8px 28px rgba(0,0,0,0.2)" }}>
+          ✓ {toast}
         </div>
-        <p style={{ textAlign:"center", color:pal.txt3, fontSize:12, marginTop:24, maxWidth:540, marginLeft:"auto", marginRight:"auto" }}>
-          {lang==="fr" ? "Vous n'avez pas a apprendre ces outils — on les opere pour vous. Vous payez l'abonnement, c'est dans votre Slack demain matin." : "You don't have to learn these tools — we operate them for you. You pay the subscription, it's in your Slack tomorrow morning."}
-        </p>
-      </section>
-
-      {/* PERSUASION — pathos / logos / ethos / solution */}
-      <section id="why" className="wk-persuasion wk-section" style={{ padding:"100px 40px", maxWidth:860, margin:"0 auto" }}>
-        <SectionHead pal={pal} tag={t.persuasion.sectionTag} title={t.persuasion.title} />
-        <div style={{ display:"flex", flexDirection:"column", gap:22 }}>
-          {t.persuasion.paragraphs.map((p, i) => {
-            const labelMap: Record<string, { fr: string; en: string }> = {
-              pathos:   { fr: "L'enjeu humain",  en: "What's at stake" },
-              logos:    { fr: "Les faits",       en: "The facts" },
-              ethos:    { fr: "Notre legitimite", en: "Our credibility" },
-              solution: { fr: "Notre reponse",   en: "Our answer" },
-            };
-            const label = labelMap[p.type]?.[lang] ?? "";
-            return (
-              <div key={i} style={{ borderLeft:`2px solid ${pal.accentBorder}`, paddingLeft:22 }}>
-                <div style={{ fontSize:"0.62rem", fontWeight:700, letterSpacing:"2.5px", textTransform:"uppercase", color:pal.accent, marginBottom:10 }}>{label}</div>
-                <p style={{ fontSize:"1.02rem", color:pal.txt2, lineHeight:1.85, margin:0 }}>{p.text}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="cta" className="wk-section" style={{ padding:"0 40px 100px", maxWidth:860, margin:"0 auto" }}>
-        <div style={{ background:pal.surface, border:`1px solid ${pal.accentBorder}`, borderRadius:24, padding:"64px 48px", textAlign:"center", backgroundImage:`radial-gradient(ellipse at 50% 0%, ${pal.accentSoft} 0%, transparent 65%)` }}>
-          <p style={{ fontSize:"0.68rem", color:pal.accent, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:16 }}>{lang==="fr"?"Demarrer":"Get started"}</p>
-          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:pal.txt1, marginBottom:14, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>{t.ctaTitle}</h2>
-          <p style={{ color:pal.txt2, fontSize:"1rem", marginBottom:36, lineHeight:1.7, maxWidth:540, margin:"0 auto 36px" }}>{t.ctaDesc}</p>
-          <CtaRow t={t} pal={pal} isDark={isDark} waLink={waLink} />
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="wk-section" style={{ borderTop:`1px solid ${pal.border}`, padding:"32px 40px" }}>
-        <div className="wk-foot" style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:16 }}>
-          <div>
-            <span style={{ fontWeight:800, fontSize:16, color:pal.txt1 }}>{P.name}</span><span style={{ color:pal.accent }}>.</span>
-            <span style={{ display:"block", fontSize:12, color:pal.txt3, marginTop:3 }}>{t.footerTagline}</span>
-          </div>
-          <p style={{ fontSize:13, color:pal.txt3, margin:0 }}>© 2026 {P.name} — {lang==="fr"?"Un produit":"A product by"} <a href="https://wikolabs.com" style={{ color:pal.txt2, textDecoration:"none" }}>Wikolabs</a></p>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:16, fontSize:13, alignItems:"center" }}>
-            <a href="mailto:team@wikolabs.com" style={{ color:pal.txt3, textDecoration:"none" }}>team@wikolabs.com</a>
-            <span style={{ color:pal.txt3 }}>·</span>
-            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' style={{ background:"none", border:"none", color:pal.txt3, fontSize:13, cursor:"pointer", fontFamily:"inherit", padding:0 }}>{t.ctaPrimary}</button>
-          </div>
-        </div>
-      </footer>
+      )}
     </div>
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-function SectionHead({ pal, tag, title }: { pal: typeof P.palette; tag: string; title: string }) {
-  return (
-    <div style={{ textAlign:"center", marginBottom:52 }}>
-      <p style={{ fontSize:"0.68rem", color:pal.accent, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>{tag}</p>
-      <h2
-        style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:pal.txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif", lineHeight:1.15, margin:0 }}
-        dangerouslySetInnerHTML={{ __html: title.replace(/<em>/g, `<em style="font-style:italic;color:${pal.accent}">`) }}
-      />
-    </div>
-  );
-}
-
-function CtaRow({ t, pal, isDark, waLink }: { t: typeof P.content.fr; pal: typeof P.palette; isDark: boolean; waLink: string }) {
-  return (
-    <div className="wk-cta-row" style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center", animation:"fadeUp .5s .32s ease both" }}>
-      <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
-        style={{ background:pal.accent, color:isDark?"#04080F":"#FFFFFF", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"inline-flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
-        📅 {t.ctaPrimary}
-      </button>
-      <a href={waLink} target="_blank" rel="noopener noreferrer" className="wk-btn-wa"
-        style={{ background:"#25d366", color:"#FFFFFF", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"inline-flex", alignItems:"center", gap:8 }}>
-        💬 {t.ctaWhatsApp}
-      </a>
-      <a href="/demo" className="wk-btn-demo" data-orig-btn="1"
-        style={{ background:"transparent", color:pal.txt2, border:`1px solid ${pal.border}`, borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, display:"inline-flex", alignItems:"center", gap:10, fontFamily:"inherit", position:"relative" }}>
-        ✨ {t.ctaDemo}
-      </a>
-    </div>
-  );
+function renderMarkdown(md: string): string {
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const blocks: string[] = [];
+  let listBuf: string[] = [];
+  const flushList = () => {
+    if (listBuf.length) {
+      blocks.push("<ul>" + listBuf.map((l) => `<li>${l}</li>`).join("") + "</ul>");
+      listBuf = [];
+    }
+  };
+  for (const raw of md.split("\n")) {
+    const line = raw.trim();
+    if (!line) { flushList(); continue; }
+    if (line.startsWith("- ")) {
+      listBuf.push(esc(line.slice(2)).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"));
+    } else if (line.startsWith("**") && line.endsWith("**")) {
+      flushList();
+      blocks.push(`<strong>${esc(line.slice(2, -2))}</strong>`);
+    } else {
+      flushList();
+      blocks.push(`<p>${esc(line).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")}</p>`);
+    }
+  }
+  flushList();
+  return blocks.join("");
 }
